@@ -11,8 +11,8 @@ import MenuItem from '../menu-item/menu-item.component';
 const Directory = ( { sections } ) => (
             <div className='directory-menu'>
                 {
-                    sections.map( ( { title, imageUrl, id, size, linkUrl } ) => (
-                        <MenuItem key={id} title={title} imageUrl={imageUrl} size={size} linkUrl={linkUrl} />
+                    sections.map( ( { id, ...otherProps } ) => (
+                        <MenuItem key={id} {...otherProps} />
                     ) )
 
                     // We can also write like this way:-
