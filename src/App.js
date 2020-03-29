@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { GlobalStyle } from './global.styles';
 import Spinner from './components/spinner/spinner.component';
 import Header from './components/header/header.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
@@ -27,15 +28,17 @@ const App = ({ checkUserSession, currentUser }) => {
         <GlobalStyle />
         <Header/>
         <Switch>
-
-          <Suspense fallback={<Spinner />}>
-            <Route exact={true} path='/' component={ HomePage } />
-            <Route path='/shop' component={ ShopPage } />
-            <Route path='/contact' component={ ContactPage } />
-            <Route exact={true} path='/checkout' component={ CheckoutPage } />
-            <Route exact={true} path='/signin' render = {() => currentUser ? (<Redirect to='/'/>) : (<SignInSignUpPage/>)} />
-          </Suspense>
-
+          
+          <ErrorBoundary>
+            <Suspense fallback={<Spinner />}>
+              <Route exact={true} path='/' component={ HomePage } />
+              <Route path='/shop' component={ ShopPage } />
+              <Route path='/contact' component={ ContactPage } />
+              <Route exact={true} path='/checkout' component={ CheckoutPage } />
+              <Route exact={true} path='/signin' render = {() => currentUser ? (<Redirect to='/'/>) : (<SignInSignUpPage/>)} />
+            </Suspense>
+          </ErrorBoundary>
+  
         </Switch>
       </div >
     );
